@@ -1,6 +1,7 @@
 const GoogleGenAI = require('@google/genai')
 const Transaction = require('../models/transaction.models');
 const Budget = require('../models/budget.models');
+const User = require('../models/user.models')
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const AdvisorAI = async (req, res) => {
@@ -27,6 +28,8 @@ const AdvisorAI = async (req, res) => {
     );
 
     const budgetDoc = await Budget.findOne({ userId: req.user.userId });
+    const name = await User.findOne({ userId: req.user.userId })
+    const firstName = name ? name.firstName : ''
     const budgetAmount = budgetDoc ? budgetDoc.amount : 0;
 
     let totalIncome = 0;
@@ -59,10 +62,12 @@ Output Rules:
 - Keep it short (max 3-4 sentences).
 - Provide ONE specific, actionable tip based on their data.
 - Use Rupee symbol (₹) for currency.
+- user user name to refer them
 `;
 
     const userStats = `
 Analyze my current financial status and give me advice:
+- User name: ${firstName}
 - Total Income: ₹${totalIncome}
 - Total Expenses: ₹${totalExpenses}
 - Net Balance: ₹${balance}
