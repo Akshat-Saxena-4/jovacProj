@@ -409,7 +409,7 @@ export default function Dashboard({ onLogOut }) {
                                 <h2 className="text-lg font-bold">Quick Add</h2>
                             </div>
 
-                            <form onSubmit={handleAdd} className="space-y-4">
+                            <form onSubmit={handleAdd} className="space-y-4 text-black font-black">
                                 {/* Segmented Toggle for Type */}
                                 <div className="flex bg-black/10 p-1 rounded-xl">
                                     <button
